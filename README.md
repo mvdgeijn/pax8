@@ -41,6 +41,14 @@ $list = $contacts->list( $company->getId() );
 $contact = $contacts->get( $company->getId(), $list[0]->getId() );
 ```
 
+## Supported resources
+
+| Component |        all         |        get         | update | delete |
+|-----------|:------------------:|:------------------:|:------:|:------:|
+| Companies | :white_check_mark: | :white_check_mark: |        |        |
+| Contacts  | :white_check_mark: | :white_check_mark: |        |        |
+
+
 ## Links
 
 * [Pax8 API documentation](https://docs.pax8.com/api/v1)
