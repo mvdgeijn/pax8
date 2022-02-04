@@ -1,0 +1,20 @@
+{
+    "name": "mvdgeijn/pax8",
+    "autoload": {
+        "psr-4": {
+            "Mvdgeijn\\Pax8\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bHosted",
+            "email": "marc@bhosted.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.0.1"
+    }
+}
