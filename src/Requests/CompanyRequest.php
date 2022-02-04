@@ -29,6 +29,15 @@ class CompanyRequest extends AbstractRequest
             return Company::parseCompany(json_decode( $response->getBody() ) );
         else
             return null;
+    }
 
+    public function create( Company $company ): ?Company
+    {
+        $response = $this->getRequest('/v1/companies', $company->createCompany() );
+
+        if ($response->getStatusCode() == 200)
+            return Company::parseCompany(json_decode( $response->getBody() ) );
+        else
+            return null;
     }
 }

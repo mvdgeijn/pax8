@@ -3,6 +3,7 @@
 namespace Mvdgeijn\Pax8\Responses;
 
 use Illuminate\Support\Collection;
+use stdClass;
 
 class Company
 {
@@ -18,13 +19,19 @@ class Company
 
     protected string $country;
 
+    protected string $phone;
+
     protected string $website;
 
     protected string $status;
 
     protected bool $billOnBehalfOfEnabled = false;
 
+    protected bool $selfServiceAllowed = false;
+
     protected bool $orderApprovalRequired = false;
+
+    protected string $externalId;
 
 
     public static function createFromBody( string $body )
@@ -43,7 +50,9 @@ class Company
 
     public static function parseCompany( object $data ): Company
     {
-        return (new Company())
+        $company = new Company();
+
+        $company
             ->setId($data->id)
             ->setName($data->name)
             ->setStreet($data->address->street)
@@ -51,9 +60,31 @@ class Company
             ->setZipcode($data->address->postalCode)
             ->setCountry($data->address->country)
             ->setWebsite($data->website)
+            ->setExternalId($data->externalId ?? null)
             ->setStatus($data->status)
             ->setBillOnBehalfOfEnabled($data->billOnBehalfOfEnabled)
             ->setOrderApprovalRequired($data->orderApprovalRequired);
+
+        return $company;
+    }
+
+    public function createCompany( ): array
+    {
+        return [
+            'name' => $this->getName(),
+            'address' => [
+                'street' => $this->getStreet(),
+                'city' => $this->getCity(),
+                'postalCode' => $this->getZipcode(),
+                'country' => $this->getCountry()
+            ],
+            'phone' => $this->getPhone(),
+            'website' => $this->getWebsite(),
+            'externalId' => $this->getExternalId(),
+            'billOnBehalfOfEnabled' => $this->isBillOnBehalfOfEnabled(),
+            'selfServiceAllowed' => $this->isSelfServiceAllowed(),
+            'orderApprovalRequired' => $this->isOrderApprovalRequired()
+        ];
     }
 
     /**
@@ -238,6 +269,61 @@ class Company
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    /**
+     * @param string|null $externalId
+     * @return Company
+     */
+    public function setExternalId(?string $externalId): Company
+    {
+        $this->externalId = $externalId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId(): string
+    {
+        return $this->externalId;
+    }
+
+    /**
+     * @param bool $selfServiceAllowed
+     * @return Company
+     */
+    public function setSelfServiceAllowed(bool $selfServiceAllowed): Company
+    {
+        $this->selfServiceAllowed = $selfServiceAllowed;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSelfServiceAllowed(): bool
+    {
+        return $this->selfServiceAllowed;
+    }
+
+    /**
+     * @param string $phone
+     * @return Company
+     */
+    public function setPhone(string $phone): Company
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone(): string
+    {
+        return $this->phone;
     }
 
 
