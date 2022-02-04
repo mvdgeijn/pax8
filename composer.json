@@ -1,5 +1,9 @@
 {
     "name": "mvdgeijn/pax8",
+    "type": "library",
+    "description": "Library for communicating with the pax8.com API",
+    "keywords": ["pax8", "api"],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Mvdgeijn\\Pax8\\": "src/"
