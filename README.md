@@ -11,7 +11,7 @@ Install this Pax8 PHP library with Composer:
 composer require 'mvdgeijn/pax8'
 ```
 
-##.env
+## .env
 
 You can get your developer credentials from the Pax8 panel: https://docs.pax8.com/api/v1#section/Create-a-Developer-Application
 
