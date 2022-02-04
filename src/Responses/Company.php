@@ -31,8 +31,7 @@ class Company
 
     protected bool $orderApprovalRequired = false;
 
-    protected string $externalId;
-
+    protected ?string $externalId;
 
     public static function createFromBody( string $body )
     {
