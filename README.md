@@ -43,11 +43,16 @@ $contact = $contacts->get( $company->getId(), $list[0]->getId() );
 
 ## Supported resources
 
-| Component |     Fetch all      |    Fetch single    |       Create       | Update | delete |
-|-----------|:------------------:|:------------------:|:------------------:|:------:|:------:|
-| Companies | :white_check_mark: | :white_check_mark: | :white_check_mark: |        |        |
-| Contacts  | :white_check_mark: | :white_check_mark: |                    |        |        | 
-
+| Component     |       Fetch all       |     Fetch single      |        Create         |        Update         |        delete         |
+|---------------|:---------------------:|:---------------------:|:---------------------:|:---------------------:|:---------------------:|
+| AccessToken   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |      :no_entry:       |      :no_entry:       |
+| Companies     |  :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |
+| Contacts      |  :white_check_mark:   |  :white_check_mark:   | :black_square_button: | :black_square_button: | :black_square_button: | 
+| Products      | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
+| Orders        | :black_square_button: | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |
+| Subscriptions | :black_square_button: | :black_square_button: |      :no_entry:       | :black_square_button: | :black_square_button: |
+| Invoices      | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
+| Usage         | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
 
 ## Links
 
