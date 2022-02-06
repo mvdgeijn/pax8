@@ -21,7 +21,25 @@ class AbstractRequest
         $this->accessToken = $accessToken;
     }
 
-    protected function getRequest( $path, $query = [] ): ?ResponseInterface
+    /**
+     * Get the used access token object
+     *
+     * @return AccessToken
+     */
+    public function getAccessToken(): AccessToken
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Do a GET request on the Pax8 API
+     *
+     * @param $path
+     * @param $query
+     * @return ResponseInterface|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function getRequest($path, $query = [] ): ?ResponseInterface
     {
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 2.0]);
         $response = $client->request('GET', $path, [
@@ -35,7 +53,15 @@ class AbstractRequest
         return $this->handleErrors( $response );
     }
 
-    protected function postRequest( $path, array $data ): ?ResponseInterface
+    /**
+     * Do a POST request on the Pax8 API
+     *
+     * @param $path
+     * @param array $data
+     * @return ResponseInterface|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function postRequest($path, array $data ): ?ResponseInterface
     {
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 2.0]);
         $response = $client->request('POST', $path, [
@@ -49,7 +75,13 @@ class AbstractRequest
         return $this->handleErrors( $response );
     }
 
-    private function handleErrors( ResponseInterface &$response ): ?ResponseInterface
+    /**
+     * Handle the return errors (if any) on a Pax8 API request (GET and POST)
+     *
+     * @param ResponseInterface $response
+     * @return ResponseInterface|null
+     */
+    private function handleErrors(ResponseInterface &$response ): ?ResponseInterface
     {
         if( $response->getStatusCode() !== 200 ) {
             $this->errors = null;
@@ -75,8 +107,23 @@ class AbstractRequest
         return $response;
     }
 
+    /**
+     * Return all errors in a array of strings, or null if no errors
+     *
+     * @return array|null
+     */
     public function getErrors( ): ?array
     {
         return $this->errors;
+    }
+
+    /**
+     * Returns true of there are any errors, false if no errors at all
+     *
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return( $this->errors == null );
     }
 }
