@@ -15,6 +15,7 @@ class CompanyRequest extends AbstractRequest
      *
      * @param array $options
      * @return Collection|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function list(array $options = [] ): ?Collection
     {
@@ -31,6 +32,7 @@ class CompanyRequest extends AbstractRequest
      *
      * @param string $companyId
      * @return Company|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get(string $companyId ): ?Company
     {
@@ -50,6 +52,7 @@ class CompanyRequest extends AbstractRequest
      *
      * @param Company $company
      * @return Company|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function create(Company $company ): ?Company
     {
