@@ -3,9 +3,8 @@
 namespace Mvdgeijn\Pax8\Responses;
 
 use Illuminate\Support\Collection;
-use stdClass;
 
-class Company
+class Company extends AbstractResponse
 {
     protected string $id;
 
@@ -33,7 +32,7 @@ class Company
 
     protected ?string $externalId;
 
-    public static function createFromBody( string $body )
+    public static function createFromBody( string $body ): Collection
     {
         $json = json_decode( $body );
 

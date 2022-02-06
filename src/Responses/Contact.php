@@ -3,9 +3,10 @@
 namespace Mvdgeijn\Pax8\Responses;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Collection;
 
-class Contact
+class Contact extends AbstractResponse
 {
     protected string $id;
 
@@ -23,9 +24,9 @@ class Contact
 
     protected Carbon $createdDate;
 
-    protected array $types;
+    protected ContactType $types;
 
-    public static function createFromBody( string $body )
+    public static function createFromBody( string $body ): Collection
     {
         $json = json_decode( $body );
 
@@ -51,6 +52,22 @@ class Contact
             ->setPhoneNumber($data->phoneNumber)
             ->setcreatedDate($data->createdDate)
             ->setTypes( $data->types );
+    }
+
+    /**
+     * Create contact array for contact:create request
+     *
+     * @return array
+     */
+    public function createContact()
+    {
+        return [
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'email' => $this->getEmail(),
+            'phone' => $this->getPhone(),
+            'types' => $this->getTypes()
+        ];
     }
 
     /**
@@ -118,9 +135,9 @@ class Contact
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -167,10 +184,7 @@ class Contact
      */
     public function setCreatedDate($createdDate): Contact
     {
-        if( gettype($createdDate) == "string" )
-            $createdDate = Carbon::parse( $createdDate );
-
-        $this->createdDate = $createdDate;
+        $this->createdDate = Contact::getDate( $createdDate );
 
         return $this;
     }
@@ -186,17 +200,25 @@ class Contact
     /**
      * @param mixed $types
      * @return Contact
+     *
+     * @throws \Exception
      */
-    public function setTypes($types): Contact
+    public function setTypes( $types ): Contact
     {
-        $this->types = $types;
+        if( is_array( $types ) )
+            $this->types = ContactType::create( $types );
+        elseif( is_object( $types ) && get_class($types) == ContactType::class )
+            $this->types = $types;
+        else
+            throw new Exception("Invalid types passed to contact");
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return ContactType
      */
-    public function getTypes()
+    public function getTypes(): ContactType
     {
         return $this->types;
     }
@@ -218,5 +240,4 @@ class Contact
     {
         return $this->phoneNumber;
     }
-
 }
