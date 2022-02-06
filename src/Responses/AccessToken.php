@@ -7,25 +7,30 @@ use Mvdgeijn\Pax8\Requests\ContactRequest;
 
 class AccessToken
 {
-    public $accessToken;
+    public string $accessToken;
 
-    public $expiryTimestamp;
+    public int $expiryTimestamp;
 
     public function isExpired(): bool
     {
         return time() > $this->expiryTimestamp;
     }
 
-    public static function createFromBody( string $body): AccessToken
+    public static function createFromBody( string $body): ?AccessToken
     {
         $json = json_decode( $body );
 
-        $token = new AccessToken();
+        if( isset( $json->access_token ) && isset( $json->expires_in ) )
+        {
+            $token = new AccessToken();
 
-        $token->accessToken = $json->access_token;
-        $token->expiryTimestamp = time() + $json->expires_in - 600;
+            $token->accessToken = $json->access_token;
+            $token->expiryTimestamp = time() + $json->expires_in - 600;
 
-        return $token;
+            return $token;
+        }
+
+        return null;
     }
 
     public function companyRequest(): CompanyRequest
