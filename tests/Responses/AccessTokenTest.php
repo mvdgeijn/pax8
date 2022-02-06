@@ -12,7 +12,6 @@ class AccessTokenTest extends TestCase
 
     public function testAccessToken()
     {
-
         $body =<<< EOT
 {
     "access_token": "dummy-access-token",
@@ -21,9 +20,7 @@ class AccessTokenTest extends TestCase
 }
 EOT;
         $accessToken = accessToken::createFromBody( $body );
-
         $this->assertTrue(strcmp($accessToken->accessToken, "dummy-access-token" ) == 0 );
-
         $this->assertFalse( $accessToken->isExpired() );
 
         /* Check if a CompanyRequest object is returned */
