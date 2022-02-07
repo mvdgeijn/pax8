@@ -62,6 +62,16 @@ Class ContactType
             unset( $this->types[self::CONTACTTYPE_ADMIN]);
     }
 
+    public function isAdmin(): bool
+    {
+        return isset( $this->types[self::CONTACTTYPE_ADMIN] );
+    }
+
+    public function isPrimaryAdmin(): bool
+    {
+        return isset( $this->types[self::CONTACTTYPE_ADMIN] ) && $this->types[self::CONTACTTYPE_ADMIN] == true;
+    }
+
     public function enableTech( bool $primary = false )
     {
         $this->types[self::CONTACTTYPE_TECH] = $primary;
@@ -73,6 +83,16 @@ Class ContactType
             unset( $this->types[self::CONTACTTYPE_TECH]);
     }
 
+    public function isTech(): bool
+    {
+        return isset( $this->types[self::CONTACTTYPE_TECH] );
+    }
+
+    public function isPrimaryTech(): bool
+    {
+        return isset( $this->types[self::CONTACTTYPE_TECH] ) && $this->types[self::CONTACTTYPE_TECH] == true;
+    }
+
     public function enableBilling( bool $primary = false )
     {
         $this->types[self::CONTACTTYPE_TECH] = $primary;
@@ -82,6 +102,16 @@ Class ContactType
     {
         if( isset( $this->types[self::CONTACTTYPE_BILLING] ) )
             unset( $this->types[self::CONTACTTYPE_BILLING]);
+    }
+
+    public function isBilling(): bool
+    {
+        return isset( $this->types[self::CONTACTTYPE_BILLING] );
+    }
+
+    public function isPrimaryBilling(): bool
+    {
+        return isset( $this->types[self::CONTACTTYPE_BILLING] ) && $this->types[self::CONTACTTYPE_BILLING] == true;
     }
 
 }
