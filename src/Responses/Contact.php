@@ -4,7 +4,7 @@ namespace Mvdgeijn\Pax8\Responses;
 
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Collection;
+use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 
 class Contact extends AbstractResponse
 {
@@ -26,32 +26,18 @@ class Contact extends AbstractResponse
 
     protected ContactType $types;
 
-    public static function createFromBody( string $body ): Collection
-    {
-        $json = json_decode( $body );
-
-        $collection = new Collection();
-
-        foreach( $json->content as $contact )
-        {
-            $collection->add( Contact::parseContact( $contact ) );
-        }
-
-        return $collection;
-    }
-
-    public static function parseContact( object $data ): Contact
+    public static function parse( object $item ): Contact
     {
         return (new Contact())
-            ->setId( $data->id )
-            ->setFirstName($data->firstName )
-            ->setLastName($data->lastName )
-            ->setEmail($data->email)
-            ->setPhone($data->phone)
-            ->setPhoneCountryCode($data->phoneCountryCode)
-            ->setPhoneNumber($data->phoneNumber)
-            ->setcreatedDate($data->createdDate)
-            ->setTypes( $data->types );
+            ->setId( $item->id )
+            ->setFirstName($item->firstName )
+            ->setLastName($item->lastName )
+            ->setEmail($item->email)
+            ->setPhone($item->phone)
+            ->setPhoneCountryCode($item->phoneCountryCode)
+            ->setPhoneNumber($item->phoneNumber)
+            ->setcreatedDate($item->createdDate)
+            ->setTypes( $item->types );
     }
 
     /**

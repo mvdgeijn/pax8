@@ -1,7 +1,7 @@
 # Pax8
 
-A PHP library for Pax8 Integration.
-Use the Pax8 Rest API to have your PHP application communicate directly with your Pax8 account.
+A Laravel library for Pax8 Integration.
+Use the Pax8 Rest API to have your Laravel application communicate directly with your Pax8 account.
 
 ## Installation
 
@@ -15,13 +15,12 @@ composer require 'mvdgeijn/pax8'
 
 You can get your developer credentials from the Pax8 panel: https://docs.pax8.com/api/v1#section/Create-a-Developer-Application
 
-Added the credentials to your project .env file:
+Add the credentials to your project .env file. These credentials are used to get an access token. This access token is valid for 24h, so
+it's recommended to store it and renew it within 24h.
 
 PAX8_CLIENT_ID=<your client id>
 
 PAX8_CLIENT_SECRET=<your client secret>
-
-These credentials are used to get your access token.
 
 ## Usage
 

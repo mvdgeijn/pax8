@@ -4,6 +4,7 @@ namespace Mvdgeijn\Pax8\Responses;
 
 use Mvdgeijn\Pax8\Requests\CompanyRequest;
 use Mvdgeijn\Pax8\Requests\ContactRequest;
+use Mvdgeijn\Pax8\Requests\SubscriptionRequest;
 
 class AccessToken
 {
@@ -43,4 +44,8 @@ class AccessToken
         return new ContactRequest($this);
     }
 
+    public function subscriptionRequest(): SubscriptionRequest
+    {
+        return new SubscriptionRequest($this);
+    }
 }

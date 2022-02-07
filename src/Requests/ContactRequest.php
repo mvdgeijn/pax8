@@ -3,6 +3,7 @@
 namespace Mvdgeijn\Pax8\Requests;
 
 use Illuminate\Support\Collection;
+use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 use Mvdgeijn\Pax8\Responses\Contact;
 
 class ContactRequest extends AbstractRequest
@@ -18,12 +19,12 @@ class ContactRequest extends AbstractRequest
      *
      * @param string $companyId
      * @param array $options
-     * @return Collection|null
+     * @return PaginatedCollection|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function list(string $companyId, array $options = [] ): ?Collection
+    public function list(string $companyId, array $options = [] ): ?PaginatedCollection
     {
-        $response = $this->getRequest( "/v1/companies/$companyId/contacts");
+        $response = $this->getRequest("/v1/companies/$companyId/contacts", $options);
 
         if ($response->getStatusCode() == 200)
             return Contact::createFromBody( $response->getBody() );
@@ -45,7 +46,7 @@ class ContactRequest extends AbstractRequest
         $response = $this->getRequest("/v1/companies/$companyId/contacts/$contactId" );
 
         if ($response->getStatusCode() == 200)
-            return Contact::parseContact(json_decode( $response->getBody() ) );
+            return Contact::parse(json_decode( $response->getBody() ) );
         else
             return null;
     }
@@ -63,7 +64,7 @@ class ContactRequest extends AbstractRequest
         $response = $this->getRequest('/v1/companies/contacts', $contact->createContact() );
 
         if ($response->getStatusCode() == 200)
-            return Contact::parseContact(json_decode( $response->getBody() ) );
+            return Contact::parse(json_decode( $response->getBody() ) );
         else
             return null;
 

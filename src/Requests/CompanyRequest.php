@@ -2,7 +2,7 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
-use Illuminate\Support\Collection;
+use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 use Mvdgeijn\Pax8\Responses\Company;
 
 class CompanyRequest extends AbstractRequest
@@ -14,10 +14,10 @@ class CompanyRequest extends AbstractRequest
      * options
      *
      * @param array $options
-     * @return Collection|null
+     * @return PaginatedCollection|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function list(array $options = [] ): ?Collection
+    public function list(array $options = [] ): ?PaginatedCollection
     {
         $response = $this->getRequest( '/v1/companies', $options );
 
@@ -39,7 +39,7 @@ class CompanyRequest extends AbstractRequest
         $response = $this->getRequest('/v1/companies/' . $companyId );
 
         if ($response->getStatusCode() == 200)
-            return Company::parseCompany(json_decode( $response->getBody() ) );
+            return Company::parse(json_decode( $response->getBody() ) );
         else
             return null;
     }
@@ -59,7 +59,7 @@ class CompanyRequest extends AbstractRequest
         $response = $this->getRequest('/v1/companies', $company->createCompany() );
 
         if ($response->getStatusCode() == 200)
-            return Company::parseCompany(json_decode( $response->getBody() ) );
+            return Company::parse(json_decode( $response->getBody() ) );
         else
             return null;
     }

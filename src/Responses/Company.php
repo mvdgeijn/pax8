@@ -3,6 +3,7 @@
 namespace Mvdgeijn\Pax8\Responses;
 
 use Illuminate\Support\Collection;
+use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 
 class Company extends AbstractResponse
 {
@@ -32,36 +33,22 @@ class Company extends AbstractResponse
 
     protected ?string $externalId;
 
-    public static function createFromBody( string $body ): Collection
-    {
-        $json = json_decode( $body );
-
-        $collection = new Collection();
-
-        foreach( $json->content as $company )
-        {
-            $collection->add( Company::parseCompany( $company ) );
-        }
-
-        return $collection;
-    }
-
-    public static function parseCompany( object $data ): Company
+    public static function parse( object $item ): Company
     {
         $company = new Company();
 
         $company
-            ->setId($data->id)
-            ->setName($data->name)
-            ->setStreet($data->address->street)
-            ->setCity($data->address->city)
-            ->setZipcode($data->address->postalCode)
-            ->setCountry($data->address->country)
-            ->setWebsite($data->website)
-            ->setExternalId($data->externalId ?? null)
-            ->setStatus($data->status)
-            ->setBillOnBehalfOfEnabled($data->billOnBehalfOfEnabled)
-            ->setOrderApprovalRequired($data->orderApprovalRequired);
+            ->setId($item->id)
+            ->setName($item->name)
+            ->setStreet($item->address->street)
+            ->setCity($item->address->city)
+            ->setZipcode($item->address->postalCode)
+            ->setCountry($item->address->country)
+            ->setWebsite($item->website)
+            ->setExternalId($item->externalId ?? null)
+            ->setStatus($item->status)
+            ->setBillOnBehalfOfEnabled($item->billOnBehalfOfEnabled)
+            ->setOrderApprovalRequired($item->orderApprovalRequired);
 
         return $company;
     }

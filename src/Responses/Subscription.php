@@ -3,7 +3,7 @@
 namespace Mvdgeijn\Pax8\Responses;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 
 class Subscription extends AbstractResponse
 {
@@ -27,35 +27,21 @@ class Subscription extends AbstractResponse
 
     protected string $billingTerm;
 
-    public static function createFromBody( string $body ): Collection
-    {
-        $json = json_decode( $body );
-
-        $collection = new Collection();
-
-        foreach( $json->content as $subscription )
-        {
-            $collection->add( Subscription::parseSubscription( $subscription ) );
-        }
-
-        return $collection;
-    }
-
-    public static function parseSubscription( object $data ): Subscription
+    public static function parse( object $item ): Subscription
     {
         $subscription = new Subscription();
 
         $subscription
-            ->setId( $data->id )
-            ->setCompanyId( $data->companyId )
-            ->setProductId( $data->productId )
-            ->setQuantity( $data->quantity )
-            ->setStartDate( $data->startDate )
-            ->setCreatedDate( $data->createdDate )
-            ->setBillingStart( $data->billingStart )
-            ->setStatus( $data->status )
-            ->setPrice($data->price )
-            ->setBillingTerm( $data->billingTerm );
+            ->setId( $item->id )
+            ->setCompanyId( $item->companyId )
+            ->setProductId( $item->productId )
+            ->setQuantity( $item->quantity )
+            ->setStartDate( $item->startDate )
+            ->setCreatedDate( $item->createdDate )
+            ->setBillingStart( $item->billingStart )
+            ->setStatus( $item->status )
+            ->setPrice($item->price )
+            ->setBillingTerm( $item->billingTerm );
 
         return $subscription;
     }

@@ -2,7 +2,7 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
-use Illuminate\Support\Collection;
+use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 use Mvdgeijn\Pax8\Responses\Subscription;
 
 class SubscriptionRequest extends AbstractRequest
@@ -14,10 +14,10 @@ class SubscriptionRequest extends AbstractRequest
      * options
      *
      * @param array $options
-     * @return Collection|null
+     * @return PaginatedCollection|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function list(array $options = [] ): ?Collection
+    public function list(array $options = [] ): ?PaginatedCollection
     {
         $response = $this->getRequest( '/v1/subscriptions', $options );
 
@@ -39,7 +39,7 @@ class SubscriptionRequest extends AbstractRequest
         $response = $this->getRequest('/v1/subscriptions/' . $subscriptionId );
 
         if ($response->getStatusCode() == 200)
-            return Subscription::parseSubscription(json_decode( $response->getBody() ) );
+            return Subscription::parse(json_decode( $response->getBody() ) );
         else
             return null;
     }
