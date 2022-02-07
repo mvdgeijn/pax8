@@ -18,9 +18,9 @@ You can get your developer credentials from the Pax8 panel: https://docs.pax8.co
 Add the credentials to your project .env file. These credentials are used to get an access token. This access token is valid for 24h, so
 it's recommended to store it and renew it within 24h.
 
-PAX8_CLIENT_ID=<your client id>
+PAX8_CLIENT_ID="your client id"
 
-PAX8_CLIENT_SECRET=<your client secret>
+PAX8_CLIENT_SECRET="your client secret"
 
 ## Usage
 
@@ -48,7 +48,7 @@ $contact = $contacts->get( $company->getId(), $list[0]->getId() );
 | Companies     |  :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |
 | Contacts      |  :white_check_mark:   |  :white_check_mark:   | :black_square_button: | :black_square_button: | :black_square_button: | 
 | Products      |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |      :no_entry:       |
-| Orders        | :black_square_button: | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |
+| Orders        |  :white_check_mark:   |  :white_check_mark:   | :black_square_button: |      :no_entry:       |      :no_entry:       |
 | Subscriptions |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       | :black_square_button: | :black_square_button: |
 | Invoices      | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
 | Usage         | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
