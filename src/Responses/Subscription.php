@@ -3,12 +3,9 @@
 namespace Mvdgeijn\Pax8\Responses;
 
 use Carbon\Carbon;
-use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 
 class Subscription extends AbstractResponse
 {
-    protected string $id;
-
     protected string $companyId;
 
     protected string $productId;
@@ -44,24 +41,6 @@ class Subscription extends AbstractResponse
             ->setBillingTerm( $item->billingTerm );
 
         return $subscription;
-    }
-
-    /**
-     * @param string $id
-     * @return Subscription
-     */
-    public function setId(string $id): Subscription
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
     }
 
     /**

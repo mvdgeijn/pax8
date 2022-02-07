@@ -2,13 +2,8 @@
 
 namespace Mvdgeijn\Pax8\Responses;
 
-use Illuminate\Support\Collection;
-use Mvdgeijn\Pax8\Collections\PaginatedCollection;
-
 class Company extends AbstractResponse
 {
-    protected string $id;
-
     protected string $name;
 
     protected string $street;
@@ -70,25 +65,6 @@ class Company extends AbstractResponse
             'selfServiceAllowed' => $this->isSelfServiceAllowed(),
             'orderApprovalRequired' => $this->isOrderApprovalRequired()
         ];
-    }
-
-    /**
-     * @param mixed $id
-     * @return Company
-     */
-    public function setId($id): Company
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

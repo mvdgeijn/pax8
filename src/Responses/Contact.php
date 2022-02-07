@@ -4,12 +4,9 @@ namespace Mvdgeijn\Pax8\Responses;
 
 use Carbon\Carbon;
 use Exception;
-use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 
 class Contact extends AbstractResponse
 {
-    protected string $id;
-
     protected string $firstName;
 
     protected string $lastName;
@@ -54,24 +51,6 @@ class Contact extends AbstractResponse
             'phone' => $this->getPhone(),
             'types' => $this->getTypes()
         ];
-    }
-
-    /**
-     * @param mixed $id
-     * @return Contact
-     */
-    public function setId($id): Contact
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

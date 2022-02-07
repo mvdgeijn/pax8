@@ -10,7 +10,7 @@ class SubscriptionRequest extends AbstractRequest
     /**
      * Returns a paginated list of all your subscriptions filtered by optional parameters
      *
-     * Check https://docs.pax8.com/api/v1#operation/findCompanies for possible
+     * Check https://docs.pax8.com/api/v1#tag/Subscriptions for possible
      * options
      *
      * @param array $options
@@ -28,7 +28,7 @@ class SubscriptionRequest extends AbstractRequest
     }
 
     /**
-     * Returns a single company record matching the companyId you specify
+     * Returns a single subscription record matching the subscriptionId you specify
      *
      * @param string $subscriptionId
      * @return Subscription|null
