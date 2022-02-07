@@ -14,21 +14,6 @@ class Product extends AbstractResponse
 
     protected ?string $vendorSku;
 
-    public static function parse( object $item ): Product
-    {
-        $product = new Product();
-
-        $product
-            ->setId($item->id)
-            ->setName($item->name)
-            ->setVendorName($item->vendorName)
-            ->setShortDescription($item->shortDescription)
-            ->setSku($item->sku)
-            ->setVendorSku($item->vendorSku);
-
-        return $product;
-    }
-
     /**
      * @param string $name
      * @return Product

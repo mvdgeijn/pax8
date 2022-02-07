@@ -24,25 +24,6 @@ class Subscription extends AbstractResponse
 
     protected string $billingTerm;
 
-    public static function parse( object $item ): Subscription
-    {
-        $subscription = new Subscription();
-
-        $subscription
-            ->setId( $item->id )
-            ->setCompanyId( $item->companyId )
-            ->setProductId( $item->productId )
-            ->setQuantity( $item->quantity )
-            ->setStartDate( $item->startDate )
-            ->setCreatedDate( $item->createdDate )
-            ->setBillingStart( $item->billingStart )
-            ->setStatus( $item->status )
-            ->setPrice($item->price )
-            ->setBillingTerm( $item->billingTerm );
-
-        return $subscription;
-    }
-
     /**
      * @param string $companyId
      * @return Subscription

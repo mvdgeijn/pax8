@@ -16,21 +16,6 @@ class OrderLine extends AbstractResponse
 
     protected int $quantity;
 
-    public static function parse( object $item ): OrderLine
-    {
-        $orderLine = new OrderLine();
-
-        $orderLine
-            ->setId($item->id)
-            ->setProductId($item->productId )
-            ->setSubscriptionId($item->subscriptionId)
-            ->setProvisionStartDate($item->provisionStartDate)
-            ->setBillingTerm($item->billingTerm)
-            ->setQuantity($item->quantity);
-
-        return $orderLine;
-    }
-
     /**
      * @param string $productId
      * @return OrderLine

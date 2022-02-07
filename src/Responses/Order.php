@@ -19,22 +19,6 @@ class Order extends AbstractResponse
 
     protected Collection $lineItems;
 
-    public static function parse( object $item ): Order
-    {
-        $order = new Order();
-
-        $order
-            ->setId($item->id)
-            ->setCompanyId($item->companyId)
-            ->setCreatedDate($item->createdDate)
-            ->setOrderedBy($item->orderedBy)
-            ->setOrderedByUserId($item->orderedByUserId)
-            ->setOrderedByUserEmail($item->orderedByUserEmail)
-            ->setLineItems($item->lineItems);
-
-        return $order;
-    }
-
     /**
      * @param string $companyId
      * @return Order

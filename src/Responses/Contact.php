@@ -23,20 +23,6 @@ class Contact extends AbstractResponse
 
     protected ContactType $types;
 
-    public static function parse( object $item ): Contact
-    {
-        return (new Contact())
-            ->setId( $item->id )
-            ->setFirstName($item->firstName )
-            ->setLastName($item->lastName )
-            ->setEmail($item->email)
-            ->setPhone($item->phone)
-            ->setPhoneCountryCode($item->phoneCountryCode)
-            ->setPhoneNumber($item->phoneNumber)
-            ->setcreatedDate($item->createdDate)
-            ->setTypes( $item->types );
-    }
-
     /**
      * Create contact array for contact:create request
      *

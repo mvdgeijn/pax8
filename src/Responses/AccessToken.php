@@ -4,6 +4,7 @@ namespace Mvdgeijn\Pax8\Responses;
 
 use Mvdgeijn\Pax8\Requests\CompanyRequest;
 use Mvdgeijn\Pax8\Requests\ContactRequest;
+use Mvdgeijn\Pax8\Requests\InvoiceRequest;
 use Mvdgeijn\Pax8\Requests\OrderRequest;
 use Mvdgeijn\Pax8\Requests\ProductRequest;
 use Mvdgeijn\Pax8\Requests\SubscriptionRequest;
@@ -59,5 +60,10 @@ class AccessToken
     public function orderRequest(): OrderRequest
     {
         return new OrderRequest($this);
+    }
+
+    public function invoiceRequest(): InvoiceRequest
+    {
+        return new InvoiceRequest($this);
     }
 }

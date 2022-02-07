@@ -28,26 +28,6 @@ class Company extends AbstractResponse
 
     protected ?string $externalId;
 
-    public static function parse( object $item ): Company
-    {
-        $company = new Company();
-
-        $company
-            ->setId($item->id)
-            ->setName($item->name)
-            ->setStreet($item->address->street)
-            ->setCity($item->address->city)
-            ->setZipcode($item->address->postalCode)
-            ->setCountry($item->address->country)
-            ->setWebsite($item->website)
-            ->setExternalId($item->externalId ?? null)
-            ->setStatus($item->status)
-            ->setBillOnBehalfOfEnabled($item->billOnBehalfOfEnabled)
-            ->setOrderApprovalRequired($item->orderApprovalRequired);
-
-        return $company;
-    }
-
     public function createCompany( ): array
     {
         return [
@@ -65,6 +45,14 @@ class Company extends AbstractResponse
             'selfServiceAllowed' => $this->isSelfServiceAllowed(),
             'orderApprovalRequired' => $this->isOrderApprovalRequired()
         ];
+    }
+
+    public function setAddress( $address )
+    {
+        $this->setStreet( $address->street );
+        $this->setCity( $address->city );
+        $this->setZipcode( $address->postalCode );
+        $this->setCountry( $address->country );
     }
 
     /**

@@ -5,11 +5,16 @@ namespace Mvdgeijn\Pax8\Responses;
 use Carbon\Carbon;
 use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 
-abstract class AbstractResponse
+class AbstractResponse
 {
     protected string $id;
 
-    public static function createFromBody( string $body ): PaginatedCollection
+    /**
+     * @param string $body
+     * @return PaginatedCollection
+     * @throws \Exception
+     */
+    public static function createFromBody(string $body ): PaginatedCollection
     {
         $json = json_decode( $body );
         $collection = PaginatedCollection::create( $json->page );
@@ -20,14 +25,49 @@ abstract class AbstractResponse
         return $collection;
     }
 
-    abstract public static function parse( object $item ): AbstractResponse;
+    /**
+     * @param object $item
+     * @return AbstractResponse
+     * @throws \Exception
+     */
+    public static function parse(object $item)
+    {
+        $response = new (static::class)();
 
-    public static function getDate( $date ): Carbon
+        foreach( $item as $key => $value )
+        {
+            $method = 'set' . ucfirst( $key );
+            if( method_exists($response,$method ) )
+            {
+                $response->{$method}($value);
+            } else
+            {
+                throw new \Exception( "$method : $key" );
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param $date
+     * @return Carbon
+     */
+    public static function getDate($date ): Carbon
     {
         if( gettype($date) == "string" )
             $date = Carbon::parse( $date );
 
         return $date;
+    }
+
+    /**
+     * @param $amount
+     * @return string
+     */
+    public static function getAmount($amount ): string
+    {
+        return bcmul( $amount, 1, 2 );
     }
 
     /**
