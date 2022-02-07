@@ -19,8 +19,11 @@ class AbstractResponse
         $json = json_decode( $body );
         $collection = PaginatedCollection::create( $json->page );
 
-        foreach( $json->content as $item )
-            $collection->add( static::parse( $item ) );
+        if(property_exists($json, 'content'))
+        {
+            foreach ($json->content as $item)
+                $collection->add(static::parse($item));
+        }
 
         return $collection;
     }
@@ -32,7 +35,8 @@ class AbstractResponse
      */
     public static function parse(object $item)
     {
-        $response = new (static::class)();
+        $class = static::class;
+        $response = new $class();
 
         foreach( $item as $key => $value )
         {

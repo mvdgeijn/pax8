@@ -26,7 +26,7 @@ class Company extends AbstractResponse
 
     protected bool $orderApprovalRequired = false;
 
-    protected ?string $externalId;
+    protected ?string $externalId = null;
 
     public function createCompany( ): array
     {
@@ -234,7 +234,7 @@ class Company extends AbstractResponse
     /**
      * @return string
      */
-    public function getExternalId(): string
+    public function getExternalId(): ?string
     {
         return $this->externalId;
     }
