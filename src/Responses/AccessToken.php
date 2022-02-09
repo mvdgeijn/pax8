@@ -11,9 +11,15 @@ use Mvdgeijn\Pax8\Requests\SubscriptionRequest;
 
 class AccessToken
 {
-    public string $accessToken;
+    public ?string $accessToken;
 
     public int $expiryTimestamp;
+
+    public function __construct( ?string $accessToken = null, int $expiryTimestamp = 0 )
+    {
+        $this->accessToken = $accessToken;
+        $this->expiryTimestamp = $expiryTimestamp;
+    }
 
     public function isExpired(): bool
     {
