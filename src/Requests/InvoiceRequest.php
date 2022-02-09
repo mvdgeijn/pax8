@@ -12,8 +12,9 @@ class InvoiceRequest extends AbstractRequest
     /**
      * Returns a paginated list of all your invoices filtered by optional parameters
      *
-     * Check https://docs.pax8.com/api/v1#tag/Invoices for possible
-     * options
+     * Check link for possible options
+     *
+     * @link https://docs.pax8.com/api/v1#tag/Invoices
      *
      * @param array $options
      * @return PaginatedCollection|null

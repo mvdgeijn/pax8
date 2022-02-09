@@ -10,8 +10,9 @@ class OrderRequest extends AbstractRequest
     /**
      * Returns a paginated list of all your orders filtered by optional parameters
      *
-     * Check https://docs.pax8.com/api/v1#tag/Orders for possible
-     * options
+     * Check link for possible options
+     *
+     * @link https://docs.pax8.com/api/v1#tag/Invoices
      *
      * @param array $options
      * @return PaginatedCollection|null

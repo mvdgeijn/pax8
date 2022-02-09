@@ -10,8 +10,9 @@ class ProductRequest extends AbstractRequest
     /**
      * Returns a paginated list of all your products filtered by optional parameters
      *
-     * Check https://docs.pax8.com/api/v1#tag/Products for possible
-     * options
+     * Check for possible options
+     *
+     * @link https://docs.pax8.com/api/v1#tag/Products
      *
      * @param array $options
      * @return PaginatedCollection|null

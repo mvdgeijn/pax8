@@ -10,8 +10,9 @@ class CompanyRequest extends AbstractRequest
     /**
      * Returns a paginated list of all your companies filtered by optional parameters
      *
-     * Check https://docs.pax8.com/api/v1#operation/findCompanies for possible
-     * options
+     * Check link for possible options
+     *
+     * @link https://docs.pax8.com/api/v1#operation/findCompanies
      *
      * @param array $options
      * @return PaginatedCollection|null
@@ -54,7 +55,7 @@ class CompanyRequest extends AbstractRequest
      * @return Company|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function create(Company $company ): ?Company
+    public function create(Company $company): ?Company
     {
         $response = $this->getRequest('/v1/companies', $company->createCompany() );
 

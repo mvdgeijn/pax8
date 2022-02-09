@@ -59,7 +59,7 @@ class ContactRequest extends AbstractRequest
      * @return Contact|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function create(Contact $contact ): ?Contact
+    public function create(Contact $contact): ?Contact
     {
         $response = $this->getRequest('/v1/companies/contacts', $contact->createContact() );
 

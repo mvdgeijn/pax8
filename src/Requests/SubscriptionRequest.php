@@ -10,8 +10,9 @@ class SubscriptionRequest extends AbstractRequest
     /**
      * Returns a paginated list of all your subscriptions filtered by optional parameters
      *
-     * Check https://docs.pax8.com/api/v1#tag/Subscriptions for possible
-     * options
+     * Check for possible options
+     *
+     * @link https://docs.pax8.com/api/v1#tag/Subscriptions
      *
      * @param array $options
      * @return PaginatedCollection|null
