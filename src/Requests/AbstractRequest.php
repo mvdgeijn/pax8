@@ -42,7 +42,7 @@ class AbstractRequest
      */
     protected function getRequest($path, $query = [] ): ?ResponseInterface
     {
-        $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 2.0]);
+        $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 10]);
         $response = $client->request('GET', $path, [
             'headers' => [
                 'content-type' => 'application/json',
@@ -64,7 +64,7 @@ class AbstractRequest
      */
     protected function postRequest($path, \stdClass $data ): ?ResponseInterface
     {
-        $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 2.0]);
+        $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 60]);
         $response = $client->request('POST', $path, [
             'headers' => [
                 'content-type' => 'application/json',

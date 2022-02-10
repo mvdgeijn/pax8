@@ -44,4 +44,58 @@ class ProductRequest extends AbstractRequest
         else
             return null;
     }
+
+    /**
+     * Returns a single product record matching the productId you specify
+     *
+     * @param string $productId
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getProvisioningDetails(string $productId)
+    {
+        $response = $this->getRequest('/v1/products/' . $productId . '/provision-details');
+
+        if ($response->getStatusCode() == 200)
+            return json_decode($response->getBody() );
+        else
+            return null;
+    }
+
+    /**
+     * Returns pricing information for a single product
+     *
+     * @param string $productId
+     * @return mixed|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getPricing(string $productId)
+    {
+        $response = $this->getRequest('/v1/products/' . $productId . '/pricing');
+
+        if ($response->getStatusCode() == 200)
+            return json_decode($response->getBody() );
+        else
+            return null;
+
+    }
+
+    /**
+     * Returns dependencies for a single product
+     *
+     * @param string $productId
+     * @return mixed|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getDependencies(string $productId)
+    {
+        $response = $this->getRequest('/v1/products/' . $productId . '/dependencies');
+
+        if ($response->getStatusCode() == 200)
+            return json_decode($response->getBody() );
+        else
+            return null;
+
+    }
+
 }
