@@ -16,7 +16,7 @@ composer require 'mvdgeijn/pax8'
 You can get your developer credentials from the Pax8 panel: https://docs.pax8.com/api/v1#section/Create-a-Developer-Application
 
 Add the credentials to your project .env file. These credentials are used to get an access token. This access token is valid for 24h, so
-it's recommended to store it and renew it within 24h.
+it's recommended to store it and renew it within 24h. Check also the Events section below.
 
 PAX8_CLIENT_ID="your client id"
 
@@ -38,6 +38,30 @@ $contacts = $accessToken->contactRequest();
 $list = $contacts->list( $company->getId() );
 
 $contact = $contacts->get( $company->getId(), $list[0]->getId() );
+```
+
+## Events
+
+This package fires one event: Mvdgeijn/Pax8/Pax8AccessTokenCreatedEvent. This event can be used to store
+the newly created AccessToken somewhere.
+
+```php
+namespace App\Listeners;
+
+use Mvdgeijn\Pax8\Events\Pax8AccessTokenCreatedEvent;
+
+class Pax8AccessTokenCreatedListener
+{
+    public function handle(Pax8AccessTokenCreatedEvent $event)
+    {
+        //
+        // The new accessToken object can be access using $event->accessToken
+        //
+        // Store $event->accessToken->accessToken and $event->accessToken->expiryTimestamp
+        // for later usage
+        //
+    }
+}
 ```
 
 ## Supported resources
