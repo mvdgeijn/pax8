@@ -2,6 +2,7 @@
 
 namespace Mvdgeijn\Pax8\Responses;
 
+use Mvdgeijn\Pax8\Requests\AccessTokenRequest;
 use Mvdgeijn\Pax8\Requests\CompanyRequest;
 use Mvdgeijn\Pax8\Requests\ContactRequest;
 use Mvdgeijn\Pax8\Requests\InvoiceRequest;
@@ -41,6 +42,15 @@ class AccessToken
         }
 
         return null;
+    }
+
+    public function renew( )
+    {
+        $request = new AccessTokenRequest;
+        $newAccessToken = $request->getAccessToken( true );
+
+        $this->accessToken = $newAccessToken->accessToken;
+        $this->expiryTimestamp = $newAccessToken->expiryTimestamp;
     }
 
     public function companyRequest(): CompanyRequest

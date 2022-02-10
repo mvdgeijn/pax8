@@ -43,13 +43,25 @@ class AbstractRequest
     protected function getRequest($path, $query = [] ): ?ResponseInterface
     {
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 10]);
-        $response = $client->request('GET', $path, [
-            'headers' => [
-                'content-type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->accessToken->accessToken
-            ],
-            'query' => $query
-        ]);
+
+        $retries = 2;
+        while( $retries > 0 )
+        {
+            $response = $client->request('GET', $path, [
+                'headers' => [
+                    'content-type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->accessToken->accessToken
+                ],
+                'query' => $query
+            ]);
+
+            // If returned status is successful (or not equal 401/Unauthorized), don't retry
+            if( $response->getStatusCode() != 401 )
+                break;
+
+            $this->accessToken->renew();
+            $retries--;
+        }
 
         return $this->handleErrors( $response );
     }
@@ -65,14 +77,24 @@ class AbstractRequest
     protected function postRequest($path, \stdClass $data ): ?ResponseInterface
     {
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 60]);
-        $response = $client->request('POST', $path, [
-            'headers' => [
-                'content-type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->accessToken->accessToken
-            ],
-            RequestOptions::JSON => $data
-        ]);
 
+        $retries = 2;
+        while( $retries > 0 ) {
+            $response = $client->request('POST', $path, [
+                'headers' => [
+                    'content-type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->accessToken->accessToken
+                ],
+                RequestOptions::JSON => $data
+            ]);
+
+            // If returned status is successful (or not equal 401/Unauthorized), don't retry
+            if( $response->getStatusCode() != 401 )
+                break;
+
+            $this->accessToken->renew();
+            $retries--;
+        }
         return $this->handleErrors( $response );
     }
 
