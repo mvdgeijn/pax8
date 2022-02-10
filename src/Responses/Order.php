@@ -19,6 +19,14 @@ class Order extends AbstractResponse
 
     protected Collection $lineItems;
 
+    public function createOrder(): array
+    {
+        return [
+            'companyId' => $this->getCompanyId(),
+            'lineItems' => $this->getLineItems()
+        ];
+    }
+
     /**
      * @param string $companyId
      * @return Order
@@ -118,7 +126,8 @@ class Order extends AbstractResponse
         $this->lineItems = new Collection();
 
         foreach( $lineItems as $lineItem )
-            $this->lineItems->add( new OrderLine( $lineItem ) );
+            $lineItem = OrderLine::parse( (object) $lineItem );
+            $this->lineItems->add($lineItem);
 
         return $this;
     }

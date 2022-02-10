@@ -44,4 +44,23 @@ class OrderRequest extends AbstractRequest
         else
             return null;
     }
+
+    /**
+     * Creates a new Order.
+     *
+     * Returns null if the order contains invalid data
+     *
+     * @param Order $order
+     * @return Order|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function create(Order $order): ?Order
+    {
+        $response = $this->postRequest('/v1/orders', $order->createOrder() );
+
+        if ($response->getStatusCode() == 200)
+            return Order::parse(json_decode( $response->getBody() ) );
+        else
+            return null;
+    }
 }
