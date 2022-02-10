@@ -2,6 +2,7 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
+use GuzzleHttp\RequestOptions;
 use Mvdgeijn\Pax8\Responses\AccessToken;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
@@ -57,11 +58,11 @@ class AbstractRequest
      * Do a POST request on the Pax8 API
      *
      * @param $path
-     * @param array $data
+     * @param \stdClass $data
      * @return ResponseInterface|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function postRequest($path, array $data ): ?ResponseInterface
+    protected function postRequest($path, \stdClass $data ): ?ResponseInterface
     {
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 2.0]);
         $response = $client->request('POST', $path, [
@@ -69,7 +70,7 @@ class AbstractRequest
                 'content-type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->accessToken->accessToken
             ],
-            'form_params' => $data
+            RequestOptions::JSON => $data
         ]);
 
         return $this->handleErrors( $response );

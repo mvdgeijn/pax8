@@ -17,6 +17,7 @@ class OrderRequest extends AbstractRequest
      * @param array $options
      * @return PaginatedCollection|null
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function list(array $options = [] ): ?PaginatedCollection
     {
@@ -34,6 +35,7 @@ class OrderRequest extends AbstractRequest
      * @param string $orderId
      * @return Order|null
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function get(string $orderId): ?Order
     {
@@ -43,5 +45,22 @@ class OrderRequest extends AbstractRequest
             return Order::parse(json_decode($response->getBody()));
         else
             return null;
+    }
+
+    /**
+     * Create an order
+     *
+     * @param \stdClass $options
+     * @return mixed|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function create(\stdClass $options)
+    {
+        $response = $this->postRequest('/v1/orders', $options );
+
+        if ($response->getStatusCode() == 200)
+            return json_decode($response->getBody());
+
+        return null;
     }
 }
