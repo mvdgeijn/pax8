@@ -48,9 +48,9 @@ $contact = $contacts->get( $company->getId(), $list[0]->getId() );
 | Companies     |  :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |
 | Contacts      |  :white_check_mark:   |  :white_check_mark:   | :black_square_button: | :black_square_button: | :black_square_button: | 
 | Products      |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |      :no_entry:       |
-| Orders        |  :white_check_mark:   |  :white_check_mark:   | :black_square_button: |      :no_entry:       |      :no_entry:       |
+| Orders        |  :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |
 | Subscriptions |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       | :black_square_button: | :black_square_button: |
-| Invoices      | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
+| Invoices      |  :white_check_mark:   |  :white_check_mark:   |      :no_entry:       |      :no_entry:       |      :no_entry:       |
 | Usage         | :black_square_button: | :black_square_button: |      :no_entry:       |      :no_entry:       |      :no_entry:       |
 
 ## Links
