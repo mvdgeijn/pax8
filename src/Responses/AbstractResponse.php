@@ -44,9 +44,6 @@ class AbstractResponse
             if( method_exists($response,$method ) )
             {
                 $response->{$method}($value);
-            } else
-            {
-                throw new \Exception( "$method : $key" );
             }
         }
 

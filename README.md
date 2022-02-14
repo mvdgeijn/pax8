@@ -64,6 +64,12 @@ class Pax8AccessTokenCreatedListener
 }
 ```
 
+## Need to knows
+
+During the development of this package I ran into some pitfalls. Here a tip to hopefully save you some time.
+
+- When creating an order request, you have to add one lineItem to the array of lineItems for each product you order. For each lineItem there is a required provisioning details array. Each product has it's own provisioning details, which you can get using the productRequest()->getProvisioningDetails() request.
+
 ## Supported resources
 
 | Component     |       Fetch all       |     Fetch single      |        Create         |        Update         |        delete         |
