@@ -4,31 +4,31 @@ namespace Mvdgeijn\Pax8\Requests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Mvdgeijn\Pax8\Pax8;
 use Mvdgeijn\Pax8\Events\Pax8AccessTokenCreatedEvent;
-use Mvdgeijn\Pax8\Responses\AccessToken;
 
 class AccessTokenRequest
 {
-    private ?AccessToken $accessToken = null;
+    private ?Pax8 $pax8 = null;
 
     /**
      * @throws GuzzleException
      */
-    public function __construct(AccessToken $accessToken = null )
+    public function __construct(Pax8 $pax8 = null )
     {
-        if( $accessToken )
-            $this->accessToken = $accessToken;
+        if( $pax8 )
+            $this->pax8 = $pax8;
 
-        if( $accessToken == null || $accessToken->isExpired() )
+        if( $pax8 == null || $pax8->isExpired() )
             $this->accessToken = $this->getAccessToken();
     }
 
     /**
      * @throws GuzzleException
      */
-    public function getAccessToken( bool $renew = false ): ?AccessToken
+    public function getAccessToken( bool $renew = false ): ?Pax8
     {
-        if( $this->accessToken == null || $this->accessToken->isExpired() || $renew ) {
+        if( $this->pax8 == null || $this->pax8->isExpired() || $renew ) {
             $path = '/oauth/token';
 
             $client = new Client(['base_uri' => config('pax8.url.login'), 'timeout' => 2.0]);
@@ -45,17 +45,17 @@ class AccessTokenRequest
             ]);
 
             if ($response->getStatusCode() == 200) {
-                $accessToken = AccessToken::createFromBody($response->getBody());
+                $pax8 = Pax8::createFromBody($response->getBody());
 
-                Pax8AccessTokenCreatedEvent::dispatch( $accessToken );
+                Pax8AccessTokenCreatedEvent::dispatch( $pax8 );
 
-                return $accessToken;
+                return $pax8;
             } else {
                 return null;
             }
         }
 
-        return $this->accessToken;
+        return $this->pax8;
     }
 }
 

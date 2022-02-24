@@ -21,5 +21,15 @@
         "ext-json": "*",
         "ext-bcmath": "*",
         "guzzlehttp/guzzle": "^7.0.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mvdgeijn\\Pax8\\Pax8ServiceProvider"
+            ],
+            "aliases": {
+                "Pax8": "Mvdgeijn\\Pax8\\Facades\\Pax8"
+            }
+        }
     }
 }

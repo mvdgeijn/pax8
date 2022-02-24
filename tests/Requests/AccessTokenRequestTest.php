@@ -12,15 +12,15 @@ class AccessTokenRequestTest extends TestCase
     {
         $accessTokenRequest = new AccessTokenRequest();
 
-        $accessToken = $accessTokenRequest->getAccessToken();
+        $pax8 = $accessTokenRequest->getAccessToken();
 
-        $this->assertNotNull( $accessToken );
+        $this->assertNotNull( $pax8 );
 
-        $this->assertIsObject( $accessToken );
+        $this->assertIsObject( $pax8 );
 
-        $this->assertNotEmpty( $accessToken->accessToken );
+        $this->assertNotEmpty( $pax8->accessToken );
 
-        $this->assertTrue( $accessToken->expiryTimestamp > time() );
+        $this->assertTrue( $pax8->expiryTimestamp > time() );
     }
 
     public function test__construct()

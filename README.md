@@ -11,6 +11,14 @@ Install this Pax8 PHP library with Composer:
 composer require 'mvdgeijn/pax8'
 ```
 
+## Alias
+
+In the config\app.php file add the following line to the 'aliases' array
+
+```php
+'Pax8' => Mvdgeijn\Pax8\Facades\Pax8::class,
+```
+
 ## .env
 
 You can get your developer credentials from the Pax8 panel: https://docs.pax8.com/api/v1#section/Create-a-Developer-Application
@@ -22,18 +30,18 @@ PAX8_CLIENT_ID="your client id"
 
 PAX8_CLIENT_SECRET="your client secret"
 
+The requested access token is stored in and requested from the default cache. 
+
 ## Usage
 
 ```php
-$accessToken = ( new AccessTokenRequest() )->getAccessToken();
-
-$companies = $accessToken->companyRequest();
+$companies = Pax8::companyRequest();
 
 $list = $companies->list();
 
 $company = $companies->get( $list[0]->getId() );
 
-$contacts = $accessToken->contactRequest();
+$contacts = Pax8::contactRequest();
 
 $list = $contacts->list( $company->getId() );
 

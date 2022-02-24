@@ -2,34 +2,34 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
-use GuzzleHttp\RequestOptions;
-use Mvdgeijn\Pax8\Responses\AccessToken;
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use Mvdgeijn\Pax8\Pax8;
 use Psr\Http\Message\ResponseInterface;
 
 class AbstractRequest
 {
     protected ?string $baseUrl = null;
 
-    protected AccessToken $accessToken;
+    protected Pax8 $pax8;
 
     protected ?array $errors = null;
 
-    public function __construct( AccessToken &$accessToken )
+    public function __construct(Pax8 &$pax8 )
     {
         $this->baseUrl = config('pax8.url.api');
 
-        $this->accessToken = $accessToken;
+        $this->pax8 = $pax8;
     }
 
     /**
      * Get the used access token object
      *
-     * @return AccessToken
+     * @return Pax8
      */
-    public function getAccessToken(): AccessToken
+    public function getPax8(): Pax8
     {
-        return $this->accessToken;
+        return $this->pax8;
     }
 
     /**
@@ -42,6 +42,9 @@ class AbstractRequest
      */
     protected function getRequest($path, $query = [] ): ?ResponseInterface
     {
+        if( $this->pax8->isExpired() )
+            $this->pax8->renew();
+
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 10]);
 
         $retries = 2;
@@ -50,7 +53,7 @@ class AbstractRequest
             $response = $client->request('GET', $path, [
                 'headers' => [
                     'content-type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->accessToken->accessToken
+                    'Authorization' => 'Bearer ' . $this->pax8->accessToken
                 ],
                 'query' => $query
             ]);
@@ -59,7 +62,7 @@ class AbstractRequest
             if( $response->getStatusCode() != 401 )
                 break;
 
-            $this->accessToken->renew();
+            $this->pax8->renew();
             $retries--;
         }
 
@@ -76,6 +79,9 @@ class AbstractRequest
      */
     protected function postRequest($path, \stdClass $data ): ?ResponseInterface
     {
+        if( $this->pax8->isExpired() )
+            $this->pax8->renew();
+
         $client = new Client(['base_uri' => $this->baseUrl, 'timeout' => 60]);
 
         $retries = 2;
@@ -83,7 +89,7 @@ class AbstractRequest
             $response = $client->request('POST', $path, [
                 'headers' => [
                     'content-type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->accessToken->accessToken
+                    'Authorization' => 'Bearer ' . $this->pax8->accessToken
                 ],
                 RequestOptions::JSON => $data
             ]);
@@ -92,7 +98,7 @@ class AbstractRequest
             if( $response->getStatusCode() != 401 )
                 break;
 
-            $this->accessToken->renew();
+            $this->pax8->renew();
             $retries--;
         }
         return $this->handleErrors( $response );

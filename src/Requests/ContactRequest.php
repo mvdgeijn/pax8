@@ -2,7 +2,6 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
-use Illuminate\Support\Collection;
 use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 use Mvdgeijn\Pax8\Responses\Contact;
 
