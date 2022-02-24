@@ -14,8 +14,9 @@ class Pax8ServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/Config/pax8.php', 'pax8'
-        );    }
+            __DIR__.'/../config/pax8.php', 'pax8'
+        );
+    }
 
     /**
      * Bootstrap services.
@@ -25,6 +26,6 @@ class Pax8ServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/pax8.php' => config_path('pax8.php'),
+            __DIR__.'/../config/pax8.php' => config_path('pax8.php'),
         ]);    }
 }

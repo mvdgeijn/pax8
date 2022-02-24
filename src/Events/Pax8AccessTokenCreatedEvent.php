@@ -3,7 +3,7 @@
 namespace Mvdgeijn\Pax8\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
-use Mvdgeijn\Pax8\Responses\AccessToken;
+use Mvdgeijn\Pax8\Pax8;
 
 class Pax8AccessTokenCreatedEvent
 {
@@ -12,17 +12,17 @@ class Pax8AccessTokenCreatedEvent
     /**
      * The new Pax8 access token
      *
-     * @var AccessToken
+     * @var Pax8
      */
-    public AccessToken $accessToken;
+    public Pax8 $pax8;
 
     /**
      * Create a new event instance
      *
-     * @param AccessToken $accessToken
+     * @param Pax8 $pax8
      */
-    public function __construct(AccessToken $accessToken)
+    public function __construct(Pax8 $pax8)
     {
-        $this->accessToken = $accessToken;
+        $this->pax8 = $pax8;
     }
 }
