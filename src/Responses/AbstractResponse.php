@@ -29,6 +29,19 @@ class AbstractResponse
     }
 
     /**
+     * @return \stdClass
+     */
+    public function toObject(): \stdClass
+    {
+        $object = new \stdClass;
+
+        foreach( $this as $key => $value )
+            $object->{$key} = $value;
+
+        return $object;
+    }
+
+    /**
      * @param object $item
      * @return AbstractResponse
      * @throws \Exception

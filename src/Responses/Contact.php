@@ -39,6 +39,11 @@ class Contact extends AbstractResponse
         ];
     }
 
+    public function toObject(): \stdClass
+    {
+        return (object)$this->createContact();
+    }
+
     /**
      * @param mixed $firstName
      * @return Contact

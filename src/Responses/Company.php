@@ -47,6 +47,15 @@ class Company extends AbstractResponse
         ];
     }
 
+    public function toObject(): \stdClass
+    {
+        $array = $this->createCompany();
+
+        $array['address'] = (object)$array['address'];
+
+        return (object)$array;
+    }
+
     public function setAddress( $address )
     {
         $this->setStreet( $address->street );
