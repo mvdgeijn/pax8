@@ -68,4 +68,25 @@ class ContactRequest extends AbstractRequest
             return null;
 
     }
+
+    /**
+     * Updates an existing contact. Returns a new Contact object when successfully updated,
+     * or null if contact not updated or invalid contact information is passed
+     *
+     * @param string $companyId
+     * @param Contact $contact
+     * @return Contact|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function update(string $companyId, Contact $contact): ?Contact
+    {
+        $contactId = $contact->getId();
+        $response = $this->putRequest("/v1/companies/$companyId/contacts/$contactId", $contact->toObject() );
+
+        if ($response->getStatusCode() == 200)
+            return Contact::parse(json_decode( $response->getBody() ) );
+        else
+            return null;
+    }
+
 }

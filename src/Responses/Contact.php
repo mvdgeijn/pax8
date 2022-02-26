@@ -32,16 +32,37 @@ class Contact extends AbstractResponse
     {
         return [
             'firstName' => $this->getFirstName(),
-            'lastName' => $this->getLastName(),
-            'email' => $this->getEmail(),
-            'phone' => $this->getPhone(),
-            'types' => $this->getTypes()
+            'lastName'  => $this->getLastName(),
+            'email'     => $this->getEmail(),
+            'phone'     => $this->getPhone(),
+            'types'     => $this->getTypes()
         ];
     }
 
+    /**
+     * @return \stdClass
+     */
     public function toObject(): \stdClass
     {
-        return (object)$this->createContact();
+        $contact = new \stdClass;
+
+        $contact->firstName = $this->firstName;
+        $contact->lastName  = $this->lastName;
+        $contact->email     = $this->email;
+        $contact->phone     = $this->phone;
+
+        $types = $this->types->getTypes();
+
+        foreach( $types as $type ) {
+            $newType = new \stdClass;
+
+            $newType->type    = $type["type"];
+            $newType->primary = $type["primary"];
+
+            $contact->types[] = $newType;
+        }
+
+        return $contact;
     }
 
     /**

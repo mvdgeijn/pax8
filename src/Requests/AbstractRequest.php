@@ -79,6 +79,33 @@ class AbstractRequest
      */
     protected function postRequest($path, \stdClass $data ): ?ResponseInterface
     {
+        return $this->doRequest( 'POST', $path, $data );
+    }
+
+    /**
+     * Do a PUT request on the Pax8 API
+     *
+     * @param $path
+     * @param \stdClass $data
+     * @return ResponseInterface|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function putRequest($path, \stdClass $data ): ?ResponseInterface
+    {
+        return $this->doRequest( 'PUT', $path, $data );
+    }
+
+    /**
+     * Handle PUT or POST request on the Pax8 API
+     *
+     * @param string $method
+     * @param $path
+     * @param \stdClass $data
+     * @return ResponseInterface|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function doRequest(string $method, $path, \stdClass $data ): ?ResponseInterface
+    {
         if( $this->pax8->isExpired() )
             $this->pax8->renew();
 
@@ -86,7 +113,7 @@ class AbstractRequest
 
         $retries = 2;
         while( $retries > 0 ) {
-            $response = $client->request('POST', $path, [
+            $response = $client->request($method, $path, [
                 'headers' => [
                     'content-type' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->pax8->accessToken
@@ -101,6 +128,7 @@ class AbstractRequest
             $this->pax8->renew();
             $retries--;
         }
+
         return $this->handleErrors( $response );
     }
 

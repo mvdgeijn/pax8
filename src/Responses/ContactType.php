@@ -6,7 +6,7 @@ Class ContactType
 {
     const CONTACTTYPE_ADMIN = "Admin";
 
-    const CONTACTTYPE_TECH = "Tech";
+    const CONTACTTYPE_TECH = "Technical";
 
     const CONTACTTYPE_BILLING = "Billing";
 
@@ -72,30 +72,30 @@ Class ContactType
         return isset( $this->types[self::CONTACTTYPE_ADMIN] ) && $this->types[self::CONTACTTYPE_ADMIN] == true;
     }
 
-    public function enableTech( bool $primary = false )
+    public function enableTechnical( bool $primary = false )
     {
         $this->types[self::CONTACTTYPE_TECH] = $primary;
     }
 
-    public function disableTech( )
+    public function disableTechnical( )
     {
         if( isset( $this->types[self::CONTACTTYPE_TECH] ) )
             unset( $this->types[self::CONTACTTYPE_TECH]);
     }
 
-    public function isTech(): bool
+    public function isTechnical(): bool
     {
         return isset( $this->types[self::CONTACTTYPE_TECH] );
     }
 
-    public function isPrimaryTech(): bool
+    public function isPrimaryTechnical(): bool
     {
         return isset( $this->types[self::CONTACTTYPE_TECH] ) && $this->types[self::CONTACTTYPE_TECH] == true;
     }
 
     public function enableBilling( bool $primary = false )
     {
-        $this->types[self::CONTACTTYPE_TECH] = $primary;
+        $this->types[self::CONTACTTYPE_BILLING] = $primary;
     }
 
     public function disableBilling( )
