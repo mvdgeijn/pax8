@@ -42,7 +42,7 @@ Class ContactType
         return $types;
     }
 
-    public function getContactTypes(): array
+    public static function getContactTypes(): array
     {
         return [
             self::CONTACTTYPE_ADMIN,
