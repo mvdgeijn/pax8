@@ -58,9 +58,9 @@ class ContactRequest extends AbstractRequest
      * @return Contact|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function create(Contact $contact): ?Contact
+    public function create(string $companyId, Contact $contact): ?Contact
     {
-        $response = $this->getRequest('/v1/companies/contacts', $contact->createContact() );
+        $response = $this->postRequest("/v1/companies/$companyId/contacts", $contact->toObject() );
 
         if ($response->getStatusCode() == 200)
             return Contact::parse(json_decode( $response->getBody() ) );

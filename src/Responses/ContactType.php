@@ -51,15 +51,19 @@ Class ContactType
         ];
     }
 
-    public function enableAdmin( bool $primary = false )
+    public function enableAdmin( bool $primary = false ): static
     {
         $this->types[self::CONTACTTYPE_ADMIN] = $primary;
+
+        return $this;
     }
 
-    public function disableAdmin( )
+    public function disableAdmin( ): static
     {
         if( isset( $this->types[self::CONTACTTYPE_ADMIN] ) )
             unset( $this->types[self::CONTACTTYPE_ADMIN]);
+
+        return $this;
     }
 
     public function isAdmin(): bool
@@ -72,15 +76,19 @@ Class ContactType
         return isset( $this->types[self::CONTACTTYPE_ADMIN] ) && $this->types[self::CONTACTTYPE_ADMIN] == true;
     }
 
-    public function enableTechnical( bool $primary = false )
+    public function enableTechnical( bool $primary = false ): static
     {
         $this->types[self::CONTACTTYPE_TECH] = $primary;
+
+        return $this;
     }
 
-    public function disableTechnical( )
+    public function disableTechnical( ): static
     {
         if( isset( $this->types[self::CONTACTTYPE_TECH] ) )
             unset( $this->types[self::CONTACTTYPE_TECH]);
+
+        return $this;
     }
 
     public function isTechnical(): bool
@@ -93,15 +101,19 @@ Class ContactType
         return isset( $this->types[self::CONTACTTYPE_TECH] ) && $this->types[self::CONTACTTYPE_TECH] == true;
     }
 
-    public function enableBilling( bool $primary = false )
+    public function enableBilling( bool $primary = false ): static
     {
         $this->types[self::CONTACTTYPE_BILLING] = $primary;
+
+        return $this;
     }
 
-    public function disableBilling( )
+    public function disableBilling( ): static
     {
         if( isset( $this->types[self::CONTACTTYPE_BILLING] ) )
             unset( $this->types[self::CONTACTTYPE_BILLING]);
+
+        return $this;
     }
 
     public function isBilling(): bool

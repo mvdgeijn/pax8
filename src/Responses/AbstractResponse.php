@@ -42,6 +42,20 @@ class AbstractResponse
     }
 
     /**
+     * @return \stdClass
+     */
+    public function toArray(): array
+    {
+        $array = [];
+
+        foreach( $this as $key => $value )
+            $array[$key] = $value;
+
+        return $array;
+    }
+
+
+    /**
      * @param object $item
      * @return AbstractResponse
      * @throws \Exception
