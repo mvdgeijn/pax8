@@ -54,9 +54,9 @@ class OrderRequest extends AbstractRequest
      * @return mixed|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function create(\stdClass $options)
+    public function create(\stdClass $options, $isMock = false ): mixed
     {
-        $response = $this->postRequest('/v1/orders', $options );
+        $response = $this->postRequest('/v1/orders' . ( $isMock ? "?isMock=1" : "" ), $options );
 
         if ($response->getStatusCode() == 200)
             return json_decode($response->getBody());

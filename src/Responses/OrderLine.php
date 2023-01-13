@@ -6,15 +6,19 @@ use Carbon\Carbon;
 
 class OrderLine extends AbstractResponse
 {
-    protected string $productId;
+    public string $productId;
 
-    protected string $subscriptionId;
+    public string $subscriptionId;
 
-    protected Carbon $provisionStartDate;
+    public Carbon $provisionStartDate;
 
-    protected string $billingTerm;
+    public array $provisioningDetails;
 
-    protected int $quantity;
+    public string $billingTerm;
+
+    public string $commitmentTermId;
+
+    public int $quantity;
 
     /**
      * @param string $productId
@@ -67,7 +71,7 @@ class OrderLine extends AbstractResponse
      */
     public function getProvisionStartDate(): Carbon
     {
-        return $this->provisionStartDate;
+        return $this->provisionStartDate->toDateString();
     }
 
     /**
@@ -89,6 +93,24 @@ class OrderLine extends AbstractResponse
     }
 
     /**
+     * @param string $commitmentTermId
+     * @return $this
+     */
+    public function setCommitmentTermId(string $commitmentTermId): OrderLine
+    {
+        $this->commitmentTermId = $commitmentTermId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommitmentTermId(): string
+    {
+        return $this->commitmentTermId;
+    }
+
+    /**
      * @param int $quantity
      * @return OrderLine
      */
@@ -104,5 +126,21 @@ class OrderLine extends AbstractResponse
     public function getQuantity(): int
     {
         return $this->quantity;
+    }
+
+    /**
+     * @param string $key
+     * @param string|array $values
+     * @return $this
+     */
+    public function add(string $key, string|array $values ): OrderLine
+    {
+        $line = new \stdClass();
+        $line->key = $key;
+        $line->values = is_string( $values ) ? [$values] : $values;
+
+        $this->provisioningDetails[] = $line;
+
+        return $this;
     }
 }

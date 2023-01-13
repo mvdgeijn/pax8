@@ -44,4 +44,19 @@ class SubscriptionRequest extends AbstractRequest
         else
             return null;
     }
+
+    public function update( string $subscriptionId, int $quantity ): ?Subscription
+    {
+        $data = new \stdClass();
+        $data->quantity = $quantity;
+        $data->startdate = date("Y-m-d");
+        $data->billingTerm = "Monthly";
+
+        $response = $this->putRequest('/v1/subscriptions/' . $subscriptionId, $data );
+
+        if ($response->getStatusCode() == 200)
+            return Subscription::parse(json_decode( $response->getBody() ) );
+        else
+            return null;
+    }
 }
