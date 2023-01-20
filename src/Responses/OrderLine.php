@@ -10,7 +10,7 @@ class OrderLine extends AbstractResponse
 
     public string $subscriptionId;
 
-    public Carbon $provisionStartDate;
+    public string $provisionStartDate;
 
     public array $provisioningDetails;
 
@@ -62,16 +62,16 @@ class OrderLine extends AbstractResponse
      */
     public function setProvisionStartDate(Carbon $provisionStartDate): OrderLine
     {
-        $this->provisionStartDate = $provisionStartDate;
+        $this->provisionStartDate = $provisionStartDate->toDateString();
         return $this;
     }
 
     /**
      * @return Carbon
      */
-    public function getProvisionStartDate(): Carbon
+    public function getProvisionStartDate(): string
     {
-        return $this->provisionStartDate->toDateString();
+        return $this->provisionStartDate;
     }
 
     /**
