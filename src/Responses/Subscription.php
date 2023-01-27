@@ -13,6 +13,8 @@ class Subscription extends AbstractResponse
     protected int $quantity;
 
     protected Carbon $startDate;
+    
+    protected ?Carbon $endDate = null;
 
     protected Carbon $createdDate;
 
@@ -94,6 +96,24 @@ class Subscription extends AbstractResponse
     public function getStartDate(): Carbon
     {
         return $this->startDate;
+    }
+    
+    /**
+     * @param mixed $endDate
+     * @return Subscription
+     */
+    public function setEndDate($endDate): Subscription
+    {
+        $this->endDate = Subscription::getDate($endDate);
+        return $this;
+    }
+
+    /**
+     * @return ?Carbon
+     */
+    public function getEndDate(): ?Carbon
+    {
+        return $this->endDate;
     }
 
     /**
