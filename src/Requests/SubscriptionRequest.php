@@ -2,6 +2,7 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 use Mvdgeijn\Pax8\Responses\Subscription;
 
@@ -39,13 +40,20 @@ class SubscriptionRequest extends AbstractRequest
     {
         $response = $this->getRequest('/v1/subscriptions/' . $subscriptionId );
 
-        if ($response->getStatusCode() == 200)
-            return Subscription::parse(json_decode( $response->getBody() ) );
-        else
+        if ($response->getStatusCode() == 200) {
+            return Subscription::parse(json_decode($response->getBody()));
+        } else {
             return null;
+        }
     }
 
-    public function update( string $subscriptionId, int $quantity ): ?Subscription
+    /**
+     * @param string $subscriptionId
+     * @param int $quantity
+     * @return Subscription|null
+     * @throws GuzzleException
+     */
+    public function update(string $subscriptionId, int $quantity ): ?Subscription
     {
         $data = new \stdClass();
         $data->quantity = $quantity;
@@ -58,5 +66,25 @@ class SubscriptionRequest extends AbstractRequest
             return Subscription::parse(json_decode( $response->getBody() ) );
         else
             return null;
+    }
+
+    /**
+     * @param string $subscriptionId
+     * @param string $cancelDate
+     * @return bool
+     * @throws GuzzleException
+     */
+    public function delete(string $subscriptionId, string $cancelDate ): bool
+    {
+        $data = new \stdClass();
+        $data->canceldate = $cancelDate;
+
+        $response = $this->deleteRequest( '/v1/subscriptions/' . $subscriptionId, $data );
+
+        if( $response->getStatusCode() == 204 ) {
+            return true;
+        }
+
+        return false;
     }
 }

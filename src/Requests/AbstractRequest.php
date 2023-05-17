@@ -96,6 +96,19 @@ class AbstractRequest
     }
 
     /**
+     * Do a DELETE request on the Pax8 API
+     *
+     * @param $path
+     * @param \stdClass $data
+     * @return ResponseInterface|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function deleteRequest($path, \stdClass $data ): ?ResponseInterface
+    {
+        return $this->doRequest( 'DELETE', $path, $data );
+    }
+
+    /**
      * Handle PUT or POST request on the Pax8 API
      *
      * @param string $method
@@ -121,8 +134,8 @@ class AbstractRequest
                 RequestOptions::JSON => $data
             ]);
 
-            // If returned status is successful (or not equal 401/Unauthorized), don't retry
-            if( $response->getStatusCode() != 401 )
+            // If returned status is successful (or not equal 401/Unauthorized or 404/Not found), don't retry
+            if( in_array( $response->getStatusCode(), [200,204,401,404] ) )
                 break;
 
             $this->pax8->renew();
@@ -140,7 +153,7 @@ class AbstractRequest
      */
     private function handleErrors(ResponseInterface &$response ): ?ResponseInterface
     {
-        if( $response->getStatusCode() !== 200 ) {
+        if( ! in_array( $response->getStatusCode(), [200,204] ) ) {
             $this->errors = null;
 
             $data = json_decode($response->getBody());
