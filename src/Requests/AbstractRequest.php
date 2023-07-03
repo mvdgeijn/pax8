@@ -3,6 +3,7 @@
 namespace Mvdgeijn\Pax8\Requests;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Mvdgeijn\Pax8\Pax8;
 use Psr\Http\Message\ResponseInterface;
@@ -99,11 +100,11 @@ class AbstractRequest
      * Do a DELETE request on the Pax8 API
      *
      * @param $path
-     * @param \stdClass $data
+     * @param \stdClass|null $data
      * @return ResponseInterface|null
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    protected function deleteRequest($path, \stdClass $data ): ?ResponseInterface
+    protected function deleteRequest($path, ?\stdClass $data = null ): ?ResponseInterface
     {
         return $this->doRequest( 'DELETE', $path, $data );
     }
@@ -113,11 +114,11 @@ class AbstractRequest
      *
      * @param string $method
      * @param $path
-     * @param \stdClass $data
+     * @param \stdClass|null $data
      * @return ResponseInterface|null
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    protected function doRequest(string $method, $path, \stdClass $data ): ?ResponseInterface
+    protected function doRequest(string $method, $path, ?\stdClass $data ): ?ResponseInterface
     {
         if( $this->pax8->isExpired() )
             $this->pax8->renew();
@@ -129,6 +130,7 @@ class AbstractRequest
             $response = $client->request($method, $path, [
                 'headers' => [
                     'content-type' => 'application/json',
+                    'accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->pax8->accessToken
                 ],
                 RequestOptions::JSON => $data

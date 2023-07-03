@@ -70,16 +70,18 @@ class SubscriptionRequest extends AbstractRequest
 
     /**
      * @param string $subscriptionId
-     * @param string $cancelDate
+     * @param ?string $cancelDate
      * @return bool
      * @throws GuzzleException
      */
-    public function delete(string $subscriptionId, string $cancelDate ): bool
+    public function delete(string $subscriptionId, ?string $cancelDate ): bool
     {
-        $data = new \stdClass();
-        $data->canceldate = $cancelDate;
+        $query = "";
+        if( $cancelDate != null ) {
+            $query = "?cancelData=" . $cancelDate;
+        }
 
-        $response = $this->deleteRequest( '/v1/subscriptions/' . $subscriptionId, $data );
+        $response = $this->deleteRequest( '/v1/subscriptions/' . $subscriptionId . $query, null );
 
         if( $response->getStatusCode() == 204 ) {
             return true;
