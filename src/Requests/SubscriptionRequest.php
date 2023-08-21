@@ -2,6 +2,7 @@
 
 namespace Mvdgeijn\Pax8\Requests;
 
+use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Mvdgeijn\Pax8\Collections\PaginatedCollection;
 use Mvdgeijn\Pax8\Responses\Subscription;
@@ -50,14 +51,15 @@ class SubscriptionRequest extends AbstractRequest
     /**
      * @param string $subscriptionId
      * @param int $quantity
+     * @param Carbon|null $updateDate
      * @return Subscription|null
      * @throws GuzzleException
      */
-    public function update(string $subscriptionId, int $quantity ): ?Subscription
+    public function update(string $subscriptionId, int $quantity, ?Carbon $updateDate = null ): ?Subscription
     {
         $data = new \stdClass();
         $data->quantity = $quantity;
-        $data->startdate = date("Y-m-d");
+        $data->startDate = $updateDate->toDateString() ?: date("Y-m-d");
         $data->billingTerm = "Monthly";
 
         $response = $this->putRequest('/v1/subscriptions/' . $subscriptionId, $data );
