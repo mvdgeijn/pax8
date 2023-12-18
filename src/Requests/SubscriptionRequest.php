@@ -80,7 +80,7 @@ class SubscriptionRequest extends AbstractRequest
     {
         $query = "";
         if( $cancelDate != null ) {
-            $query = "?cancelData=" . $cancelDate;
+            $query = "?cancelDate=" . $cancelDate;
         }
 
         $response = $this->deleteRequest( '/v1/subscriptions/' . $subscriptionId . $query, null );
