@@ -20,6 +20,8 @@ class OrderLine extends AbstractResponse
 
     public int $quantity;
 
+    public int $lineItemNumber;
+
     /**
      * @param string $productId
      * @return OrderLine
@@ -141,6 +143,24 @@ class OrderLine extends AbstractResponse
 
         $this->provisioningDetails[] = $line;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLineItemNumber(): int
+    {
+        return $this->lineItemNumber;
+    }
+    
+    /**
+     * @param int $lineItemNumber
+     * @return $this
+     */
+    public function setLineItemNumber(int $lineItemNumber): OrderLine
+    {
+        $this->lineItemNumber = $lineItemNumber;
         return $this;
     }
 }
