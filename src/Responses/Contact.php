@@ -21,7 +21,7 @@ class Contact extends AbstractResponse
 
     protected Carbon $createdDate;
 
-    protected ContactType $types;
+    protected ?ContactType $types = null;
 
     /**
      * Create contact array for contact:create request
@@ -197,7 +197,10 @@ class Contact extends AbstractResponse
      */
     public function getTypes(): ContactType
     {
-        return $this->types;
+        if( $this->types == null )
+            return new ContactType();
+        else
+            return $this->types;    
     }
 
     /**
